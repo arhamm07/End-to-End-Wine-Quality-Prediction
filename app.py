@@ -43,12 +43,11 @@ def index():
             
             obj = PredictionPipeline()
             predict = obj.predict(data)
-
-            return render_template('results.html', prediction = str(predict))
+            return render_template('index.html', prediction=str(predict), show_result=True)
 
         except Exception as e:
-            print('The Exception message is: ',e)
-            return 'something is wrong'
+            print('The Exception message is: ', e)
+            return render_template('index.html', error='Something went wrong with the prediction. Please try again.')
 
     else:
         return render_template('index.html')
