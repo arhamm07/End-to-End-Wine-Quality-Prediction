@@ -1,213 +1,294 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Web App</title>
-        <link rel="icon" type="image/x-icon" href="static/assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="static/css/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <!-- Navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
-            <div class="container px-4 px-lg-5">
-                <a class="navbar-brand" href="/">Home</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    Menu
-                    <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ms-auto py-4 py-lg-0">
-<!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html">Home</a></li>-->
-<!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="about.html">About</a></li>-->
-<!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html">Sample Post</a></li>-->
-<!--                        <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="contact.html">Contact</a></li>-->
-                    </ul>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Quality Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        .input-field:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .predict-btn {
+            background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            transition: all 0.3s ease;
+        }
+        .predict-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(245, 87, 108, 0.4);
+        }
+        .feature-card {
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Navigation -->
+    <nav class="glass-effect shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-wine-glass text-purple-600 text-2xl"></i>
+                    <span class="text-xl font-bold text-gray-800">Wine Quality Predictor</span>
                 </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="/" class="text-gray-700 hover:text-purple-600 transition">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-purple-600 transition">About</a>
+                    <a href="#features" class="text-gray-700 hover:text-purple-600 transition">Features</a>
+                </div>
+                <button class="md:hidden text-gray-700" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
-        </nav>
-        <!-- Page Header-->
-        <header class="masthead" style="background-image: url('static/assets/img/wine.jpg')">
-            <div class="container position-relative px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <div class="site-heading">
-                            <h1>Wine Quality Prediction</h1>
-                            <span class="subheading">A Wine Quality Checking Web App</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="container mx-auto px-6 py-16 text-center">
+        <div class="floating">
+            <i class="fas fa-wine-bottle text-6xl text-white mb-6"></i>
+        </div>
+        <h1 class="text-5xl font-bold text-white mb-4">Wine Quality Prediction</h1>
+        <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+            Discover the quality of your wine using advanced machine learning algorithms. 
+            Input the chemical properties and get instant predictions.
+        </p>
+        <div class="flex justify-center space-x-4 mb-12">
+            <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2">
+                <i class="fas fa-chart-line text-white mr-2"></i>
+                <span class="text-white">ML Powered</span>
+            </div>
+            <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2">
+                <i class="fas fa-bolt text-white mr-2"></i>
+                <span class="text-white">Instant Results</span>
+            </div>
+            <div class="bg-white bg-opacity-20 rounded-lg px-4 py-2">
+                <i class="fas fa-shield-alt text-white mr-2"></i>
+                <span class="text-white">Accurate</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 pb-16">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-effect rounded-2xl shadow-2xl p-8">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Enter Wine Properties</h2>
+                    <p class="text-gray-600">Fill in the chemical properties to predict wine quality</p>
+                </div>
+
+                <form action="/predict" method="post" class="space-y-6" onsubmit="return validateForm()">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Fixed Acidity -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="fixed_acidity" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-flask text-purple-500 mr-2"></i>Fixed Acidity
+                            </label>
+                            <input type="number" step="0.1" name="fixed_acidity" id="fixed_acidity" 
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="4.0 - 15.0" required>
+                            <span class="text-xs text-gray-500">Typical range: 4.0 - 15.0 g/L</span>
+                        </div>
+
+                        <!-- Volatile Acidity -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="volatile_acidity" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-wind text-purple-500 mr-2"></i>Volatile Acidity
+                            </label>
+                            <input type="number" step="0.01" name="volatile_acidity" id="volatile_acidity"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="0.1 - 1.5" required>
+                            <span class="text-xs text-gray-500">Typical range: 0.1 - 1.5 g/L</span>
+                        </div>
+
+                        <!-- Citric Acid -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="citric_acid" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-lemon text-purple-500 mr-2"></i>Citric Acid
+                            </label>
+                            <input type="number" step="0.01" name="citric_acid" id="citric_acid"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="0.0 - 1.0" required>
+                            <span class="text-xs text-gray-500">Typical range: 0.0 - 1.0 g/L</span>
+                        </div>
+
+                        <!-- Residual Sugar -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="residual_sugar" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-cube text-purple-500 mr-2"></i>Residual Sugar
+                            </label>
+                            <input type="number" step="0.1" name="residual_sugar" id="residual_sugar"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="0.5 - 20.0" required>
+                            <span class="text-xs text-gray-500">Typical range: 0.5 - 20.0 g/L</span>
+                        </div>
+
+                        <!-- Chlorides -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="chlorides" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-atom text-purple-500 mr-2"></i>Chlorides
+                            </label>
+                            <input type="number" step="0.001" name="chlorides" id="chlorides"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="0.01 - 0.5" required>
+                            <span class="text-xs text-gray-500">Typical range: 0.01 - 0.5 g/L</span>
+                        </div>
+
+                        <!-- Free Sulfur Dioxide -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="free_sulfur_dioxide" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-cloud text-purple-500 mr-2"></i>Free Sulfur Dioxide
+                            </label>
+                            <input type="number" step="1" name="free_sulfur_dioxide" id="free_sulfur_dioxide"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="1 - 100" required>
+                            <span class="text-xs text-gray-500">Typical range: 1 - 100 mg/L</span>
+                        </div>
+
+                        <!-- Total Sulfur Dioxide -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="total_sulfur_dioxide" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-smog text-purple-500 mr-2"></i>Total Sulfur Dioxide
+                            </label>
+                            <input type="number" step="1" name="total_sulfur_dioxide" id="total_sulfur_dioxide"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="6 - 350" required>
+                            <span class="text-xs text-gray-500">Typical range: 6 - 350 mg/L</span>
+                        </div>
+
+                        <!-- Density -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="density" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-weight text-purple-500 mr-2"></i>Density
+                            </label>
+                            <input type="number" step="0.0001" name="density" id="density"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="0.98 - 1.05" required>
+                            <span class="text-xs text-gray-500">Typical range: 0.98 - 1.05 g/mL</span>
+                        </div>
+
+                        <!-- pH -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="pH" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-vial text-purple-500 mr-2"></i>pH
+                            </label>
+                            <input type="number" step="0.01" name="pH" id="pH"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="2.8 - 4.5" required>
+                            <span class="text-xs text-gray-500">Typical range: 2.8 - 4.5</span>
+                        </div>
+
+                        <!-- Sulphates -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md">
+                            <label for="sulphates" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-chemistry text-purple-500 mr-2"></i>Sulphates
+                            </label>
+                            <input type="number" step="0.01" name="sulphates" id="sulphates"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="0.2 - 2.0" required>
+                            <span class="text-xs text-gray-500">Typical range: 0.2 - 2.0 g/L</span>
+                        </div>
+
+                        <!-- Alcohol -->
+                        <div class="feature-card bg-white rounded-lg p-4 shadow-md md:col-span-2">
+                            <label for="alcohol" class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-beer text-purple-500 mr-2"></i>Alcohol
+                            </label>
+                            <input type="number" step="0.1" name="alcohol" id="alcohol"
+                                   class="input-field w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                   placeholder="8.0 - 15.0" required>
+                            <span class="text-xs text-gray-500">Typical range: 8.0 - 15.0 %</span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </header>
 
-
-        <!-- Main Content-->
-        <div class="container px-4 px-lg-5">
-
-           <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title>Form-v9 by Colorlib</title>
-	<!-- Mobile Specific Metas -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<!-- Font-->
-	<link rel="stylesheet" type="text/css" href="static/css2/nunito-font.css">
-	<!-- Main Style Css -->
-    <link rel="stylesheet" href="static/css2/style.css"/>
-</head>
-<body class="form-v9">
-	<div class="page-content">
-		<div class="form-v9-content" style="background-image: url('static/assets/img/form-v9.jpg')">
-			<form class="form-detail" action="/predict" method="post">
-				<h2>Please Fill The Information</h2>
-				<div class="form-row-total">
-
-					<div class="form-row">
-                        <label for="fixed_acidity"> Fixed Acidity:</label>
-						<input type="text" name="fixed_acidity" id="fixed_acidity" class="input-text" placeholder="fixed_acidity" required>
-					</div>
-
-					<div class="form-row">
-                        <label for="volatile_acidity"> Volatile Acidity:</label>
-						<input type="text" name="volatile_acidity" id="volatile_acidity" class="input-text" placeholder="volatile_acidity" required>
-					</div>
-
-				</div>
-
-
-				<div class="form-row-total">
-
-                    <div class="form-row">
-                        <label for="citric_acid"> Citric Acid:</label>
-						<input type="text" name="citric_acid" id="citric_acid" class="input-text" placeholder="citric_acid" required>
-					</div>
-
-
-                    <div class="form-row">
-                        <label for="residual_sugar"> Residual Sugar:</label>
-						<input type="text" name="residual_sugar" id="residual_sugar" class="input-text" placeholder="residual_sugar" required>
-					</div>
-
-				</div>
-
-
-                <div class="form-row-total">
-
-                    <div class="form-row">
-                        <label for="chlorides"> Chlorides:</label>
-						<input type="text" name="chlorides" id="chlorides" class="input-text" placeholder="chlorides" required>
-					</div>
-
-                    <div class="form-row">
-                        <label for="free_sulfur_dioxide"> Free Sulfur Dioxide:</label>
-						<input type="text" name="free_sulfur_dioxide" id="free_sulfur_dioxide" class="input-text" placeholder="free_sulfur_dioxide" required>
-					</div>
-
-				</div>
-
-
-                <div class="form-row-total">
-
-                    <div class="form-row">
-                        <label for="total_sulfur_dioxide"> Total Sulfur Dioxide:</label>
-						<input type="text" name="total_sulfur_dioxide" id="total_sulfur_dioxide" class="input-text" placeholder="total_sulfur_dioxide" required>
-					</div>
-
-                    <div class="form-row">
-                        <label for="density"> Density:</label>
-						<input type="text" name="density" id="density" class="input-text" placeholder="density" required>
-					</div>
-
-				</div>
-
-
-                <div class="form-row-total">
-
-                    <div class="form-row">
-                        <label for="pH"> pH:</label>
-						<input type="text" name="pH" id="pH" class="input-text" placeholder="pH" required>
-					</div>
-
-                    <div class="form-row">
-                        <label for="sulphates"> Sulphates:</label>
-						<input type="text" name="sulphates" id="sulphates" class="input-text" placeholder="sulphates" required>
-					</div>
-
-				</div>
-
-
-                <div class="form-row-total">
-
-                    <div class="form-row">
-                        <label for="alcohol"> Alcohol:</label>
-						<input type="text" name="alcohol" id="alcohol" class="input-text" placeholder="alcohol" required>
-					</div>
-
-
-				</div>
-
-
-				<div class="form-row-last">
-					<input type="submit" name="register" class="register" value="Predict">
-				</div>
-			</form>
-		</div>
-	</div>
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-</html>
-
-        </div>
-
-
-        <!-- Footer-->
-        <footer class="border-top">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <ul class="list-inline text-center">
-                            <li class="list-inline-item">
-                                <a href="https://www.linkedin.com/in/boktiarahmed73/">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://www.youtube.com/dswithbappy">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-youtube fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a href="https://github.com/entbappy">
-                                    <span class="fa-stack fa-lg">
-                                        <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="small text-center text-muted fst-italic"></div>
-                        <div class="small text-center text-muted fst-italic"></div>
+                    <div class="flex justify-center mt-8">
+                        <button type="submit" class="predict-btn text-white font-bold py-3 px-8 rounded-full text-lg shadow-lg">
+                            <i class="fas fa-magic mr-2"></i>Predict Wine Quality
+                        </button>
                     </div>
-                </div>
+                </form>
             </div>
-        </footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="static/js/scripts.js"></script>
-    </body>
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section id="features" class="container mx-auto px-6 py-16">
+        <h2 class="text-3xl font-bold text-white text-center mb-12">Why Choose Our Predictor?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="glass-effect rounded-lg p-6 text-center feature-card">
+                <i class="fas fa-brain text-4xl text-purple-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Advanced ML</h3>
+                <p class="text-gray-600">Powered by state-of-the-art machine learning algorithms for accurate predictions</p>
+            </div>
+            <div class="glass-effect rounded-lg p-6 text-center feature-card">
+                <i class="fas fa-tachometer-alt text-4xl text-purple-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Lightning Fast</h3>
+                <p class="text-gray-600">Get instant predictions without any waiting time</p>
+            </div>
+            <div class="glass-effect rounded-lg p-6 text-center feature-card">
+                <i class="fas fa-chart-bar text-4xl text-purple-600 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Detailed Analysis</h3>
+                <p class="text-gray-600">Comprehensive insights into wine quality factors</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function validateForm() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            for (let input of inputs) {
+                const value = parseFloat(input.value);
+                const min = parseFloat(input.min || 0);
+                const max = parseFloat(input.max || Infinity);
+                
+                if (isNaN(value) || value < min || value > max) {
+                    alert(`Please enter a valid value for ${input.previousElementSibling.textContent.trim()}`);
+                    input.focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function toggleMobileMenu() {
+            // Mobile menu toggle functionality
+            console.log('Mobile menu toggled');
+        }
+
+        // Add input animations
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('scale-105');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('scale-105');
+            });
+        });
+    </script>
+</body>
 </html>
